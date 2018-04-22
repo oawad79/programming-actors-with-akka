@@ -11,15 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.iteratrlearning.answers.asynchronous.MortgageApplicationService.AMOUNT_TO_BORROW;
 
-public class MortgageApplicationServlet extends AsyncCustomerEndPoint
-{
+public class MortgageApplicationServlet extends AsyncCustomerEndPoint {
     private final AsyncAccountProxy accountProxy = new AsyncAccountProxy(client, objectMapper);
     private final AsyncCreditCheckProxy creditProxy = new AsyncCreditCheckProxy(client, objectMapper);
 
     @Override
     protected void doGetCustomer(
-        final String customer, final AsyncContext context) throws Exception
-    {
+        final String customer, final AsyncContext context) throws Exception {
         final int amountToBorrow =
             Integer.parseInt(context.getRequest().getParameter(AMOUNT_TO_BORROW));
         final CustomerHandler handler = new CustomerHandler(
@@ -28,8 +26,7 @@ public class MortgageApplicationServlet extends AsyncCustomerEndPoint
         creditProxy.getCreditReport(customer, handler::onCreditReport);
     }
 
-    private class CustomerHandler
-    {
+    private class CustomerHandler {
         private final AsyncContext context;
         private final int amountToBorrow;
         private final String customer;
@@ -38,40 +35,32 @@ public class MortgageApplicationServlet extends AsyncCustomerEndPoint
         private CreditReport creditReport;
 
         private CustomerHandler(
-            final AsyncContext context, final int amountToBorrow, final String customer)
-        {
+            final AsyncContext context, final int amountToBorrow, final String customer) {
             this.context = context;
             this.amountToBorrow = amountToBorrow;
             this.customer = customer;
         }
 
-        private synchronized void onBalance(final BalanceReport balanceReport)
-        {
+        private synchronized void onBalance(final BalanceReport balanceReport) {
             this.balanceReport = balanceReport;
             checkReports();
         }
 
-        private synchronized void onCreditReport(final CreditReport creditReport)
-        {
+        private synchronized void onCreditReport(final CreditReport creditReport) {
             this.creditReport = creditReport;
             checkReports();
         }
 
-        private void checkReports()
-        {
-            if (balanceReport != null && creditReport != null)
-            {
+        private void checkReports() {
+            if (balanceReport != null && creditReport != null) {
                 final HttpServletResponse response = (HttpServletResponse) context.getResponse();
                 final int creditScore = creditReport.getCreditScore();
                 final int balance = balanceReport.getBalance();
                 final int maxAmountToBorrow = balance * 4;
 
-                if (creditScore > 700 && amountToBorrow <= maxAmountToBorrow)
-                {
+                if (creditScore > 700 && amountToBorrow <= maxAmountToBorrow) {
                     response.setStatus(HttpServletResponse.SC_OK);
-                }
-                else
-                {
+                } else {
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 }
 

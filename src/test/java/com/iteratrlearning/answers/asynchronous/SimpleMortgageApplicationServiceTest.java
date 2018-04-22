@@ -10,8 +10,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class SimpleMortgageApplicationServiceTest
-{
+public class SimpleMortgageApplicationServiceTest {
 
     @Rule
     public ServiceResource accountService = new ServiceResource(new AccountService());
@@ -23,20 +22,17 @@ public class SimpleMortgageApplicationServiceTest
     public ServiceResource service = new ServiceResource(new SimpleMortgageApplicationService());
 
     @Test
-    public void shouldOfferLowValueMortgage() throws Exception
-    {
+    public void shouldOfferLowValueMortgage() throws Exception {
         shouldOfferMortgage("100", HttpStatus.SC_OK);
     }
 
     @Test
-    public void shouldNotOfferHighValueMortgage() throws Exception
-    {
+    public void shouldNotOfferHighValueMortgage() throws Exception {
         shouldOfferMortgage("1000", HttpStatus.SC_FORBIDDEN);
     }
 
     private static void shouldOfferMortgage(final String amountToBorrow, final int responseCode)
-        throws URISyntaxException, IOException
-    {
+        throws URISyntaxException, IOException {
         ShouldOfferMortgage.attempt(amountToBorrow, responseCode, SimpleMortgageApplicationService.PORT);
     }
 }

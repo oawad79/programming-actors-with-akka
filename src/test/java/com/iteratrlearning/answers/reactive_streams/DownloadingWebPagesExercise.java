@@ -9,12 +9,10 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class DownloadingWebPagesExercise
-{
+public class DownloadingWebPagesExercise {
 
     @Test
-    public void canDownloadWebPages() throws IOException
-    {
+    public void canDownloadWebPages() throws IOException {
         final String[] urls = {
             "http://iteratrlearning.com",
             "https://en.wikipedia.org/wiki/Bob_Dylan",
@@ -29,17 +27,16 @@ public class DownloadingWebPagesExercise
             .onErrorReturnItem("Invalid URL");
 
         final List<String> values = content
-                .test()
-                .assertNoErrors()
-                .assertComplete()
-                .assertValueCount(3)
-                .values();
+            .test()
+            .assertNoErrors()
+            .assertComplete()
+            .assertValueCount(3)
+            .values();
 
         assertEquals(values.get(2), "Invalid URL");
     }
 
-    private String getContentAsString(final String uri) throws IOException
-    {
+    private String getContentAsString(final String uri) throws IOException {
         return Request
             .Get(uri)
             .execute()

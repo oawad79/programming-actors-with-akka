@@ -1,6 +1,8 @@
 package com.iteratrlearning.examples.promises.patterns;
 
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CFExecution {
     public static void main(String[] args) throws InterruptedException {
@@ -10,13 +12,13 @@ public class CFExecution {
         long time = System.currentTimeMillis();
 
         CompletableFuture<String> future
-                = CompletableFuture.supplyAsync(() -> delayedCallback("Hello"));
+            = CompletableFuture.supplyAsync(() -> delayedCallback("Hello"));
 
-        future.thenAccept((message) -> delayedCallback(message+"1"));
+        future.thenAccept((message) -> delayedCallback(message + "1"));
 
         System.out.println("Hey from " + Thread.currentThread().getName());
 
-        future.thenAccept((message) -> delayedCallback(message+"2"));
+        future.thenAccept((message) -> delayedCallback(message + "2"));
 
 
         Thread.sleep(7000);

@@ -14,7 +14,7 @@ public class SimpleActor extends UntypedActor {
         log.info("Received Message: " + message);
         log.info("Running in thread: " + Thread.currentThread().getName());
 
-        if("Hello".equals(message)) {
+        if ("Hello".equals(message)) {
             // replies back to sender
             getSender().tell(greeting, getSelf());
         }

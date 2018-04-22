@@ -37,16 +37,16 @@ public class StatsServer extends AllDirectives {
         final ActorMaterializer materializer = ActorMaterializer.create(actorSystem);
 
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow
-                = this.createRoute().flow(actorSystem, materializer);
+            = this.createRoute().flow(actorSystem, materializer);
         final CompletionStage<ServerBinding> binding
-                = http.bindAndHandle(routeFlow, ConnectHttp.toHost("localhost", 8080), materializer);
+            = http.bindAndHandle(routeFlow, ConnectHttp.toHost("localhost", 8080), materializer);
 
         System.out.println("Type RETURN to exit");
         System.in.read();
 
         binding
-                .thenCompose(ServerBinding::unbind)
-                .thenAccept(unbound -> actorSystem.terminate());
+            .thenCompose(ServerBinding::unbind)
+            .thenAccept(unbound -> actorSystem.terminate());
     }
 
     public static void main(String[] args) throws IOException {
@@ -57,33 +57,33 @@ public class StatsServer extends AllDirectives {
     public Route createRoute() {
         // This handler generates responses to `/watch?movie=XXX` requests
         Route watchRoute =
-                parameter("movie", movieName -> {
-                    this.storageActor.tell(new ViewMovieMessage(movieName), null);
-                    return complete("OK");
-                });
+            parameter("movie", movieName -> {
+                this.storageActor.tell(new ViewMovieMessage(movieName), null);
+                return complete("OK");
+            });
 
         Route infoRoute =
-                parameter("movie", movieName ->
-                        onSuccess(() -> {
-                            InfoMovieMessage msg = new InfoMovieMessage(movieName);
-                            Timeout timeout = new Timeout(Duration.create(5, "seconds"));
-                            CompletionStage<Object> ask = PatternsCS.ask(storageActor, msg, timeout);
-                            return ask;
-                        },
-                                extraction -> complete(((InfoReplyMovieMessage)extraction).getViews().toString())
-                                )
-                );
+            parameter("movie", movieName ->
+                onSuccess(() -> {
+                        InfoMovieMessage msg = new InfoMovieMessage(movieName);
+                        Timeout timeout = new Timeout(Duration.create(5, "seconds"));
+                        CompletionStage<Object> ask = PatternsCS.ask(storageActor, msg, timeout);
+                        return ask;
+                    },
+                    extraction -> complete(((InfoReplyMovieMessage) extraction).getViews().toString())
+                )
+            );
 
         return
-                // here the complete behavior for this server is defined
-                get(() -> route(
-                        // matches the empty path
-                        pathSingleSlash(() ->
-                                // return a constant string with a certain content type
-                                complete(HttpEntities.create(ContentTypes.TEXT_HTML_UTF8,
-                                        "<html><body>:-)</body></html>"))
-                        ),
-                        path("watch", () ->  watchRoute),
-                        path("info", () -> infoRoute)));
+            // here the complete behavior for this server is defined
+            get(() -> route(
+                // matches the empty path
+                pathSingleSlash(() ->
+                    // return a constant string with a certain content type
+                    complete(HttpEntities.create(ContentTypes.TEXT_HTML_UTF8,
+                        "<html><body>:-)</body></html>"))
+                ),
+                path("watch", () -> watchRoute),
+                path("info", () -> infoRoute)));
     }
 }

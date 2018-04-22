@@ -49,8 +49,8 @@ public class StorageActorTest {
         subject.tell(new InfoMovieMessage(MOVIE1), probe.getRef());
         subject.tell(new InfoMovieMessage(MOVIE2), probe.getRef());
         probe.expectMsgAllOf(duration("1 second"),
-                new InfoReplyMovieMessage(MOVIE1, 1),
-                new InfoReplyMovieMessage(MOVIE2, 3));
+            new InfoReplyMovieMessage(MOVIE1, 1),
+            new InfoReplyMovieMessage(MOVIE2, 3));
     }
 
     @Before

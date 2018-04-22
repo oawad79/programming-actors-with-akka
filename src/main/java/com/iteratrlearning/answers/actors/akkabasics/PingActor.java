@@ -11,7 +11,7 @@ public class PingActor extends UntypedActor {
     @Override
     public void onReceive(Object message) throws Throwable {
         log.info("Received Message: " + message);
-        if("PONG".equals(message)) {
+        if ("PONG".equals(message)) {
             getSender().tell("PING", getSelf());
         }
     }

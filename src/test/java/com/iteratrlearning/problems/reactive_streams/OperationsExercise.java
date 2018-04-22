@@ -8,15 +8,13 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 @Ignore // TODO: remove Ignore
-public class OperationsExercise
-{
+public class OperationsExercise {
 
     // The tracks can be found in the field:
     // com.iteratrlearning.examples.reactive_streams.old.Tracks.allTracks
 
     @Test
-    public void canFindAllArtistsWithTracksOver200Seconds()
-    {
+    public void canFindAllArtistsWithTracksOver200Seconds() {
         // TODO: find all artist names with tracks longer than 200 seconds.
         final Flowable<String> names = null;
 
@@ -24,8 +22,7 @@ public class OperationsExercise
     }
 
     @Test
-    public void isThereATrackByPinkFloyd()
-    {
+    public void isThereATrackByPinkFloyd() {
         // TODO: check if there is a track by pink floyd
         final Single<Boolean> names = null;
 
@@ -33,8 +30,7 @@ public class OperationsExercise
     }
 
     @Test
-    public void canFindTheNameOfTheShortestTrackByLedZeppelin()
-    {
+    public void canFindTheNameOfTheShortestTrackByLedZeppelin() {
         // TODO: find the name of the shortest track by Led Zeppelin
         final Maybe<String> names = null;
 

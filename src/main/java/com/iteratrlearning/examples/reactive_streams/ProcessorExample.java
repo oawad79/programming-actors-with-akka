@@ -14,10 +14,8 @@ import java.util.stream.Stream;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
-public class ProcessorExample
-{
-    public static void main(String[] args)
-    {
+public class ProcessorExample {
+    public static void main(String[] args) {
         // 1. Explain Luke
         // 2. Wire up Darth and Luke
         // 3. Implement Darth
@@ -33,21 +31,17 @@ public class ProcessorExample
         // startChatRoom(new Luke(), new DarthVader());
     }
 
-    private interface ChatBot
-    {
+    private interface ChatBot {
         Flowable<String> outgoing();
 
         Subscriber<String> incoming();
     }
 
-    private static class DarthVader implements ChatBot
-    {
+    private static class DarthVader implements ChatBot {
         private final UnicastProcessor<String> processor = UnicastProcessor.create();
 
-        private List<String> onMessage(final String message)
-        {
-            switch (message)
-            {
+        private List<String> onMessage(final String message) {
+            switch (message) {
                 case "I'll never join you!":
                     return singletonList("If you only knew the power of The Dark Side! Obi-Wan never told you what happened to your father.");
 
@@ -58,51 +52,40 @@ public class ProcessorExample
             return emptyList();
         }
 
-        public Flowable<String> outgoing()
-        {
+        public Flowable<String> outgoing() {
             return processor.flatMapIterable(this::onMessage);
         }
 
-        public Subscriber<String> incoming()
-        {
+        public Subscriber<String> incoming() {
             return processor;
         }
     }
 
-    private static class Luke implements ChatBot
-    {
-        public Flowable<String> outgoing()
-        {
+    private static class Luke implements ChatBot {
+        public Flowable<String> outgoing() {
             return Flowable.just(
                 "I'll never join you!",
                 "He told me enough! He told me you killed him!");
         }
 
-        public Subscriber<String> incoming()
-        {
-            return new Subscriber<String>()
-            {
-                public void onSubscribe(final Subscription subscription)
-                {
+        public Subscriber<String> incoming() {
+            return new Subscriber<String>() {
+                public void onSubscribe(final Subscription subscription) {
                 }
 
-                public void onNext(final String s)
-                {
+                public void onNext(final String s) {
                 }
 
-                public void onError(final Throwable throwable)
-                {
+                public void onError(final Throwable throwable) {
                 }
 
-                public void onComplete()
-                {
+                public void onComplete() {
                 }
             };
         }
     }
 
-    private static void startChatRoom(final ChatBot ... bots)
-    {
+    private static void startChatRoom(final ChatBot... bots) {
         final ReplayProcessor<String> chatRoom = ReplayProcessor.create();
         chatRoom.subscribe(System.out::println);
         Stream.of(bots).forEach(bot -> chatRoom.subscribe(bot.incoming()));

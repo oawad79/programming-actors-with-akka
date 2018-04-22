@@ -28,13 +28,13 @@ public class CustomActor<T> implements Runnable {
     @Override
     public void run() {
         try {
-            while(true) {
+            while (true) {
                 T message = mailbox.poll();
-                if(message != null) {
+                if (message != null) {
                     actionHandler.accept(this, message);
                 }
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             errorHandler.accept(this, e);
         }
     }

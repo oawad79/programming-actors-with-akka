@@ -9,15 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import static com.iteratrlearning.answers.asynchronous.MortgageApplicationService.AMOUNT_TO_BORROW;
 
-public class MortgageApplicationServlet extends AsyncCustomerEndPoint
-{
+public class MortgageApplicationServlet extends AsyncCustomerEndPoint {
     private final AsyncAccountProxy accountProxy = new AsyncAccountProxy(client, objectMapper);
     private final AsyncCreditCheckProxy creditProxy = new AsyncCreditCheckProxy(client, objectMapper);
 
     @Override
     protected void doGetCustomer(
-        final String customer, final AsyncContext context) throws Exception
-    {
+        final String customer, final AsyncContext context) throws Exception {
         final int amountToBorrow =
             Integer.parseInt(context.getRequest().getParameter(AMOUNT_TO_BORROW));
 

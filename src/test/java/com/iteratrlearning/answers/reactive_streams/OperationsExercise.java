@@ -7,12 +7,10 @@ import io.reactivex.Maybe;
 import io.reactivex.Single;
 import org.junit.Test;
 
-public class OperationsExercise
-{
+public class OperationsExercise {
 
     @Test
-    public void canFindAllArtistsWithTracksOver200Seconds()
-    {
+    public void canFindAllArtistsWithTracksOver200Seconds() {
         final Flowable<String> names =
             Flowable.fromArray(Tracks.allTracks)
                 .filter(track -> track.getLengthInSeconds() > 200)
@@ -23,8 +21,7 @@ public class OperationsExercise
     }
 
     @Test
-    public void isThereATrackByPinkFloyd()
-    {
+    public void isThereATrackByPinkFloyd() {
         final Single<Boolean> names =
             Flowable.fromArray(Tracks.allTracks)
                 .any(track -> track.getArtist().equals(Tracks.PINK_FLOYD));
@@ -33,8 +30,7 @@ public class OperationsExercise
     }
 
     @Test
-    public void canFindTheNameOfTheShortestTrackByLedZeppelin()
-    {
+    public void canFindTheNameOfTheShortestTrackByLedZeppelin() {
         final Maybe<String> names =
             Flowable.fromArray(Tracks.allTracks)
                 .filter(track -> track.getArtist().equals(Tracks.LED_ZEPPELIN))

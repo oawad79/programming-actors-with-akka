@@ -6,13 +6,11 @@ import org.eclipse.jetty.util.thread.ThreadPool.SizedThreadPool;
 
 import java.util.function.Consumer;
 
-public class Service
-{
+public class Service {
     private final Consumer<ServletHandler> servletConfiguration;
     private final Server server;
 
-    public Service(final Consumer<ServletHandler> servletConfiguration, final int port)
-    {
+    public Service(final Consumer<ServletHandler> servletConfiguration, final int port) {
         this.servletConfiguration = servletConfiguration;
         server = new Server(port);
 
@@ -21,15 +19,13 @@ public class Service
         threadPool.setMinThreads(10);
     }
 
-    public void run() throws Exception
-    {
+    public void run() throws Exception {
         start();
         server.dumpStdErr();
         server.join();
     }
 
-    public void start() throws Exception
-    {
+    public void start() throws Exception {
         // Force static constructor
         Delayer.INST.delay();
 
@@ -41,8 +37,7 @@ public class Service
         server.start();
     }
 
-    public void stop() throws Exception
-    {
+    public void stop() throws Exception {
         server.stop();
     }
 }

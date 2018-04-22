@@ -9,14 +9,13 @@ public class AsyncExchangeServiceFaulty {
 
     ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    public double exchange(double value, double rate)
-    {
+    public double exchange(double value, double rate) {
         return Utils.round(value * rate);
     }
 
     public CompletableFuture<Double> lookupExchangeRateAsync(Currency source, Currency destination) {
         CompletableFuture<Double> result = new CompletableFuture<>();
-        if(Math.random() < 0.7) {
+        if (Math.random() < 0.7) {
             result.completeExceptionally(new TimeoutException("Couldn't connect to the Exchange sorry!"));
         }
 

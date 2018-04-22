@@ -15,8 +15,7 @@ import java.util.function.Consumer;
 
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 
-public abstract class CFCustomerEndPoint extends HttpServlet
-{
+public abstract class CFCustomerEndPoint extends HttpServlet {
     public static final String CUSTOMER_ID = "customerId";
 
     protected final ObjectMapper objectMapper = new ObjectMapper();
@@ -27,41 +26,30 @@ public abstract class CFCustomerEndPoint extends HttpServlet
     protected void doGet(
         final HttpServletRequest request,
         final HttpServletResponse response)
-        throws ServletException, IOException
-    {
+        throws ServletException, IOException {
         final String customer = request.getParameter(CUSTOMER_ID);
 
-        if ("bob".equals(customer))
-        {
-            try
-            {
+        if ("bob".equals(customer)) {
+            try {
                 doGetCustomer(customer, request.startAsync());
-            }
-            catch (final IOException | ServletException e)
-            {
+            } catch (final IOException | ServletException e) {
                 throw e;
-            }
-            catch (final Exception e)
-            {
+            } catch (final Exception e) {
                 throw new ServletException(e);
             }
-        }
-        else
-        {
+        } else {
             response.setContentType("application/text");
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.getWriter().append("Missing user").close();
         }
     }
 
-    protected void ok(final HttpServletResponse response)
-    {
+    protected void ok(final HttpServletResponse response) {
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
-    protected Consumer<Throwable> onError(final AsyncContext context)
-    {
+    protected Consumer<Throwable> onError(final AsyncContext context) {
         return t ->
         {
             t.printStackTrace();

@@ -32,9 +32,9 @@ public class PingPongActorTest {
     @Test
     public void testPingPong() {
         TestActorRef<PingActor> pingRef
-                = TestActorRef.create(system, Props.create(PingActor.class), "ping-actor");
+            = TestActorRef.create(system, Props.create(PingActor.class), "ping-actor");
         TestActorRef<PongActor> pongRef
-                = TestActorRef.create(system, Props.create(PongActor.class), "pong-actor");
+            = TestActorRef.create(system, Props.create(PongActor.class), "pong-actor");
 
         CompletableFuture<Object> futurePing = ask(pingRef, "PONG", 1000).toCompletableFuture();
         CompletableFuture<Object> futurePong = ask(pongRef, "PING", 1000).toCompletableFuture();

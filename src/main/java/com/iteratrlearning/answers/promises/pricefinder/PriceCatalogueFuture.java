@@ -9,8 +9,7 @@ import java.util.concurrent.Future;
 
 import static com.iteratrlearning.examples.promises.pricefinder.Currency.USD;
 
-public class PriceCatalogueFuture
-{
+public class PriceCatalogueFuture {
     private final Catalogue catalogue = new Catalogue();
     private final PriceFinder priceFinder = new PriceFinder();
     private final ExchangeService exchangeService = new ExchangeService();
@@ -30,7 +29,7 @@ public class PriceCatalogueFuture
         Future<Price> priceFuture = executorService.submit(() -> priceFinder.findBestPrice(productFuture.get()));
 
         Future<Double> exchangeRateFuture
-                = executorService.submit(() -> exchangeService.lookupExchangeRate(USD, localCurrency));
+            = executorService.submit(() -> exchangeService.lookupExchangeRate(USD, localCurrency));
 
         double localPrice = exchange(priceFuture.get(), exchangeRateFuture.get());
 
@@ -38,8 +37,7 @@ public class PriceCatalogueFuture
         System.out.printf("It took us %d ms to calculate this\n", System.currentTimeMillis() - time);
     }
 
-    private double exchange(Price price, double exchangeRate)
-    {
+    private double exchange(Price price, double exchangeRate) {
         return Utils.round(price.getAmount() * exchangeRate);
     }
 

@@ -5,10 +5,8 @@ import io.reactivex.Flowable;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
-public class SubscribingExample
-{
-    public static void main(String[] args)
-    {
+public class SubscribingExample {
+    public static void main(String[] args) {
         // 1. Subscribe with a subscriber
         // 2. Print just the error message
         // 3. Complete not called with an error
@@ -23,29 +21,24 @@ public class SubscribingExample
             //emitter.onError(new Exception("Noooooooooooooooo! I've lost an arm"));
         }, BackpressureStrategy.MISSING);
 
-        messages.subscribe(new Subscriber<String>()
-        {
+        messages.subscribe(new Subscriber<String>() {
             @Override
-            public void onSubscribe(final Subscription subscription)
-            {
+            public void onSubscribe(final Subscription subscription) {
                 System.out.println("starting");
             }
 
             @Override
-            public void onNext(final String message)
-            {
+            public void onNext(final String message) {
                 System.out.println(message);
             }
 
             @Override
-            public void onError(final Throwable throwable)
-            {
+            public void onError(final Throwable throwable) {
                 System.out.println(throwable.getMessage());
             }
 
             @Override
-            public void onComplete()
-            {
+            public void onComplete() {
                 System.out.println("Complete");
             }
         });

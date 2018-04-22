@@ -11,13 +11,11 @@ import java.util.function.Consumer;
 import static com.iteratrlearning.examples.synchronous.account.AccountService.PORT;
 import static com.iteratrlearning.examples.synchronous.service.CustomerEndPoint.CUSTOMER_ID;
 
-public class AsyncAccountProxy
-{
+public class AsyncAccountProxy {
     private final AsyncHttpClient client;
     private final ObjectMapper objectMapper;
 
-    public AsyncAccountProxy(final AsyncHttpClient client, final ObjectMapper objectMapper)
-    {
+    public AsyncAccountProxy(final AsyncHttpClient client, final ObjectMapper objectMapper) {
         this.client = client;
         this.objectMapper = objectMapper;
     }
@@ -25,29 +23,25 @@ public class AsyncAccountProxy
     public void getBalance(
         final String customerId,
         final Consumer<BalanceReport> callback,
-        final Consumer<Throwable> errorCallback)
-    {
+        final Consumer<Throwable> errorCallback) {
         client
             .prepareGet("http://localhost:" + PORT + "/")
             .addQueryParam(CUSTOMER_ID, customerId)
-            .execute(new AsyncCompletionHandler<String>()
-        {
-            @Override
-            public String onCompleted(final Response remoteResponse) throws Exception
-            {
-                final BalanceReport balanceReport =
-                    objectMapper.readValue(remoteResponse.getResponseBodyAsStream(), BalanceReport.class);
+            .execute(new AsyncCompletionHandler<String>() {
+                @Override
+                public String onCompleted(final Response remoteResponse) throws Exception {
+                    final BalanceReport balanceReport =
+                        objectMapper.readValue(remoteResponse.getResponseBodyAsStream(), BalanceReport.class);
 
-                callback.accept(balanceReport);
+                    callback.accept(balanceReport);
 
-                return null;
-            }
+                    return null;
+                }
 
-            @Override
-            public void onThrowable(final Throwable t)
-            {
-                errorCallback.accept(t);
-            }
-        });
+                @Override
+                public void onThrowable(final Throwable t) {
+                    errorCallback.accept(t);
+                }
+            });
     }
 }

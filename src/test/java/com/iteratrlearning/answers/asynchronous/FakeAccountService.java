@@ -10,23 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class FakeAccountService extends Service
-{
+public class FakeAccountService extends Service {
     public static AtomicInteger REQUEST_COUNT = new AtomicInteger();
 
-    public FakeAccountService()
-    {
+    public FakeAccountService() {
         super(handler ->
         {
             handler.addServletWithMapping(FakeAccountServlet.class, "/*");
         }, AccountService.PORT);
     }
 
-    public static final class FakeAccountServlet extends HttpServlet
-    {
+    public static final class FakeAccountServlet extends HttpServlet {
         @Override
-        protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException
-        {
+        protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
             REQUEST_COUNT.incrementAndGet();
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }

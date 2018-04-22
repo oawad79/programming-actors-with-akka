@@ -19,8 +19,8 @@ public class LatexToUnicodeActor extends UntypedActor {
         log.info("Received Message: " + message);
 
         String msg = (String) message;
-        String result =  msg.replaceAll("\\\\alpha", "α")
-                .replaceAll("\\\\beta", "β");
+        String result = msg.replaceAll("\\\\alpha", "α")
+            .replaceAll("\\\\beta", "β");
 
         nextActor.tell(result, getSelf());
     }

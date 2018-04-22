@@ -13,10 +13,9 @@ public class CounterActor extends UntypedActor {
     public void onReceive(Object message) throws Throwable {
         log.info("Received Message: " + message);
 
-        if("Count".equals(message)) {
+        if ("Count".equals(message)) {
             getSender().tell(count, getSelf());
-        }
-        else if("Stop".equals(message)) {
+        } else if ("Stop".equals(message)) {
             getContext().stop(getSelf());
         }
         count++;

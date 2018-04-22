@@ -44,9 +44,9 @@ public class Price {
     @Override
     public String toString() {
         return "Price{" +
-                "currency=" + currency +
-                ", price=" + price +
-                '}';
+            "currency=" + currency +
+            ", price=" + price +
+            '}';
     }
 
 }

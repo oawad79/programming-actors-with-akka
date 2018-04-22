@@ -16,7 +16,7 @@ public class CFTest {
 
     Catalogue catalogue = new Catalogue();
     AsyncPriceFinder priceFinder
-            = new AsyncPriceFinder(Executors.newSingleThreadExecutor());
+        = new AsyncPriceFinder(Executors.newSingleThreadExecutor());
 
     @Test(timeout = 1_000)
     public void testCorrectPriceWithTestTimeout() {

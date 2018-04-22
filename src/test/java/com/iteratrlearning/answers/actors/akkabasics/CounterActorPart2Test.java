@@ -15,8 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static org.junit.Assert.assertEquals;
 
-public class CounterActorPart2Test
-{
+public class CounterActorPart2Test {
 
     ActorSystem system;
 
@@ -36,7 +35,7 @@ public class CounterActorPart2Test
         TestActorRef<CounterActor> ref = TestActorRef.create(system, props, "test-counter-actor");
         CounterActor actor = ref.underlyingActor();
         final int ITERATIONS = 5;
-        for(int i = 0; i < ITERATIONS; i++) {
+        for (int i = 0; i < ITERATIONS; i++) {
             ref.tell("Status", null);
         }
 

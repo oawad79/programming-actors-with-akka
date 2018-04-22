@@ -20,7 +20,7 @@ public class Base64EncoderActor extends UntypedActor {
     public void onReceive(Object message) throws Throwable {
         log.info("Received Message: " + message);
         String msg = (String) message;
-        byte[] result =  Base64.getEncoder().encode(msg.getBytes());
+        byte[] result = Base64.getEncoder().encode(msg.getBytes());
         nextActor.tell(new String(result), getSelf());
     }
 }

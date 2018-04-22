@@ -1,9 +1,7 @@
 package com.iteratrlearning.examples.reactive_streams;
 
-public class StreamIdenticalOperations
-{
-    public static void main(String[] args)
-    {
+public class StreamIdenticalOperations {
+    public static void main(String[] args) {
         // Filter, Map, Distinct
         // Find the names of tracks over 5 mins
 

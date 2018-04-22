@@ -8,8 +8,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class CreditCheckServiceTest
-{
+public class CreditCheckServiceTest {
 
     @Rule
     public ServiceResource service = new ServiceResource(new CreditCheckService());
@@ -17,8 +16,7 @@ public class CreditCheckServiceTest
     private CreditCheckProxy proxy = new CreditCheckProxy();
 
     @Test
-    public void shouldReturnCreditReport() throws Exception
-    {
+    public void shouldReturnCreditReport() throws Exception {
         final CreditReport creditReport = proxy.getCreditReport("bob");
 
         assertEquals(creditReport.getCreditScore(), 999);

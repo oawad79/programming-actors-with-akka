@@ -7,8 +7,7 @@ public class ExchangeService {
         return exchange(value, rate);
     }
 
-    public double exchange(double value, double rate)
-    {
+    public double exchange(double value, double rate) {
         return Utils.round(value * rate);
     }
 

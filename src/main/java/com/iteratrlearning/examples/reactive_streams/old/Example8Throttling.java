@@ -4,10 +4,8 @@ import io.reactivex.Flowable;
 
 import java.util.concurrent.TimeUnit;
 
-public class Example8Throttling
-{
-    public static void main(String[] args)
-    {
+public class Example8Throttling {
+    public static void main(String[] args) {
         // 1. Print out interval of 50 ms for 10 seconds
         // 2. throttleLast (sample) and throttleFirst the stream @ 240 ms
         // 3. Print out burst of 3 numbers every 500 ms (bus driver problem)
@@ -35,14 +33,10 @@ public class Example8Throttling
         wait10Seconds();
     }
 
-    private static void wait10Seconds()
-    {
-        try
-        {
+    private static void wait10Seconds() {
+        try {
             Thread.sleep(10000);
-        }
-        catch (InterruptedException e)
-        {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

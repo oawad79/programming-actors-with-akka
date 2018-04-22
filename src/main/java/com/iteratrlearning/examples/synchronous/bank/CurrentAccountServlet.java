@@ -7,8 +7,7 @@ import com.iteratrlearning.examples.synchronous.service.CustomerEndPoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class CurrentAccountServlet extends CustomerEndPoint
-{
+public class CurrentAccountServlet extends CustomerEndPoint {
     private final AccountProxy accountProxy = new AccountProxy();
 
     @Override
@@ -16,8 +15,7 @@ public class CurrentAccountServlet extends CustomerEndPoint
         final String customer,
         final HttpServletRequest request,
         final HttpServletResponse response)
-        throws Exception
-    {
+        throws Exception {
         final BalanceReport balanceReport = accountProxy.getBalance(customer);
 
         writer.writeValue(response.getOutputStream(), balanceReport);

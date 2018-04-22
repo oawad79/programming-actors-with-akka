@@ -8,8 +8,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class AccountServiceTest
-{
+public class AccountServiceTest {
 
     @Rule
     public ServiceResource service = new ServiceResource(new AccountService());
@@ -17,8 +16,7 @@ public class AccountServiceTest
     private AccountProxy proxy = new AccountProxy();
 
     @Test
-    public void shouldReturnBalanceReport() throws Exception
-    {
+    public void shouldReturnBalanceReport() throws Exception {
         final BalanceReport balanceReport = proxy.getBalance("bob");
 
         assertEquals(balanceReport.getBalance(), 123);

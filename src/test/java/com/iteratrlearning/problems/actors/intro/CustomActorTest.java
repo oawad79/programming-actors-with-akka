@@ -12,8 +12,7 @@ import static org.mockito.Mockito.*;
 
 @Ignore // TODO: remove the ignore
 @SuppressWarnings("unchecked")
-public class CustomActorTest
-{
+public class CustomActorTest {
 
     private static final long TEST_TIMEOUT = 500L;
 
@@ -22,22 +21,19 @@ public class CustomActorTest
     private CustomActor<String> actor;
 
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         actor = ActorSystem.spawn(behaviourHandler, errorHandler);
     }
 
     @Test
-    public void testAcceptMessage()
-    {
+    public void testAcceptMessage() {
         actor.send("Hello");
 
         attemptUntilPasses(() -> verify(behaviourHandler, times(1)).accept(actor, "Hello"));
     }
 
     @Test
-    public void testErrorHandling()
-    {
+    public void testErrorHandling() {
         Exception e = new RuntimeException("Fake Error");
         Mockito.doThrow(e).when(behaviourHandler).accept(actor, "Hello");
 
@@ -46,27 +42,21 @@ public class CustomActorTest
         attemptUntilPasses(() -> verify(errorHandler, times(1)).accept(actor, e));
     }
 
-    private static void attemptUntilPasses(final Runnable runnable)
-    {
+    private static void attemptUntilPasses(final Runnable runnable) {
         final long limit = System.currentTimeMillis() + TEST_TIMEOUT;
 
         AssertionError lastThrowable = null;
-        while (limit > System.currentTimeMillis())
-        {
-            try
-            {
+        while (limit > System.currentTimeMillis()) {
+            try {
                 runnable.run();
                 lastThrowable = null;
                 break;
-            }
-            catch (final AssertionError t)
-            {
+            } catch (final AssertionError t) {
                 lastThrowable = t;
             }
         }
 
-        if (lastThrowable != null)
-        {
+        if (lastThrowable != null) {
             throw lastThrowable;
         }
     }

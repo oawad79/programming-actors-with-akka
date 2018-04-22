@@ -9,8 +9,7 @@ import static java.lang.Double.MAX_VALUE;
 import static java.lang.Double.MIN_VALUE;
 
 @Ignore // Remove Ignore and fix tests
-public class RxExchangeTest
-{
+public class RxExchangeTest {
     private static final String FIRST_SELLER = "seller1";
     private static final String FIRST_BUYER = "buyer1";
     private static final String SECOND_SELLER = "seller2";
@@ -22,8 +21,7 @@ public class RxExchangeTest
     private TestSubscriber<MarketDataSnapshot> marketData = exchange.marketDataFeed().test();
 
     @Test
-    public void shouldMatchSellAndBuyOrder()
-    {
+    public void shouldMatchSellAndBuyOrder() {
         firstSell();
         firstBuy();
 
@@ -31,8 +29,7 @@ public class RxExchangeTest
     }
 
     @Test
-    public void shouldMatchBuyAndSellOrder()
-    {
+    public void shouldMatchBuyAndSellOrder() {
         firstBuy();
         firstSell();
 
@@ -40,8 +37,7 @@ public class RxExchangeTest
     }
 
     @Test
-    public void shouldMatchFirstBuyAndSellOrder()
-    {
+    public void shouldMatchFirstBuyAndSellOrder() {
         firstBuy();
         secondBuy();
         firstSell();
@@ -50,8 +46,7 @@ public class RxExchangeTest
     }
 
     @Test
-    public void shouldMatchFirstSellAndBuyOrder()
-    {
+    public void shouldMatchFirstSellAndBuyOrder() {
         firstSell();
         secondSell();
         firstBuy();
@@ -60,8 +55,7 @@ public class RxExchangeTest
     }
 
     @Test
-    public void shouldNotifyEndOfDay()
-    {
+    public void shouldNotifyEndOfDay() {
         exchange.onEndOfDay();
 
         reports.assertComplete();
@@ -69,70 +63,60 @@ public class RxExchangeTest
     }
 
     @Test
-    public void shouldEmitMarketDataForBuyer()
-    {
+    public void shouldEmitMarketDataForBuyer() {
         firstBuy();
 
         marketData.assertValues(new MarketDataSnapshot(PRICE, MAX_VALUE))
-                  .assertNotTerminated();
+            .assertNotTerminated();
     }
 
     @Test
-    public void shouldEmitMarketDataForSeller()
-    {
+    public void shouldEmitMarketDataForSeller() {
         firstSell();
 
         marketData.assertValues(new MarketDataSnapshot(MIN_VALUE, PRICE))
-                  .assertNotTerminated();
+            .assertNotTerminated();
     }
 
     @Test
-    public void shouldEmitMarketDataForHitAndFurtherOrders()
-    {
+    public void shouldEmitMarketDataForHitAndFurtherOrders() {
         firstBuy();
         firstSell();
         firstBuy();
 
         marketData.assertValues(
-                    new MarketDataSnapshot(PRICE, MAX_VALUE),
-                    new MarketDataSnapshot(MIN_VALUE, MAX_VALUE),
-                    new MarketDataSnapshot(PRICE, MAX_VALUE))
-                  .assertNotTerminated();
+            new MarketDataSnapshot(PRICE, MAX_VALUE),
+            new MarketDataSnapshot(MIN_VALUE, MAX_VALUE),
+            new MarketDataSnapshot(PRICE, MAX_VALUE))
+            .assertNotTerminated();
     }
 
-    private void firstBuy()
-    {
+    private void firstBuy() {
         buy(FIRST_BUYER);
     }
 
-    private void secondBuy()
-    {
+    private void secondBuy() {
         buy(SECOND_BUYER);
     }
 
-    private void buy(final String buyer)
-    {
+    private void buy(final String buyer) {
         exchange.onOrder(new Order(Side.BUY, PRICE, buyer));
     }
 
-    private void firstSell()
-    {
+    private void firstSell() {
         sell(FIRST_SELLER);
     }
 
-    private void secondSell()
-    {
+    private void secondSell() {
         sell(SECOND_SELLER);
     }
 
-    private void sell(final String seller)
-    {
+    private void sell(final String seller) {
         exchange.onOrder(new Order(Side.SELL, PRICE, seller));
     }
 
-    private void hit()
-    {
+    private void hit() {
         reports.assertValues(new ExecutionReport(PRICE, FIRST_BUYER, FIRST_SELLER))
-               .assertNotTerminated();
+            .assertNotTerminated();
     }
 }

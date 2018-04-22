@@ -11,8 +11,7 @@ import java.net.URISyntaxException;
 import static org.apache.http.HttpStatus.SC_INTERNAL_SERVER_ERROR;
 import static org.junit.Assert.assertEquals;
 
-public class RetryingMortgageApplicationServiceTest
-{
+public class RetryingMortgageApplicationServiceTest {
 
     @Rule
     public ServiceResource accountService = new ServiceResource(new FakeAccountService());
@@ -24,8 +23,7 @@ public class RetryingMortgageApplicationServiceTest
     public ServiceResource service = new ServiceResource(new RetryingMortgageApplicationService());
 
     @Test
-    public void shouldOfferLowValueMortgage() throws Exception
-    {
+    public void shouldOfferLowValueMortgage() throws Exception {
         shouldOfferMortgage("100", SC_INTERNAL_SERVER_ERROR);
 
         final int requestCount = FakeAccountService.REQUEST_COUNT.get();
@@ -33,8 +31,7 @@ public class RetryingMortgageApplicationServiceTest
     }
 
     private static void shouldOfferMortgage(final String amountToBorrow, final int responseCode)
-        throws URISyntaxException, IOException
-    {
+        throws URISyntaxException, IOException {
         ShouldOfferMortgage.attempt(amountToBorrow, responseCode, RetryingMortgageApplicationService.PORT);
     }
 

@@ -7,7 +7,6 @@ import com.iteratrlearning.examples.promises.pricefinder.Utils;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 public class AsyncPriceFinder {
 

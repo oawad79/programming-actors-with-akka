@@ -1,15 +1,9 @@
 package com.iteratrlearning.examples.reactive_streams;
 
-import akka.stream.javadsl.Flow;
 import io.reactivex.Flowable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class NonStreamOperations
-{
-    public static void main(String[] args)
-    {
+public class NonStreamOperations {
+    public static void main(String[] args) {
         // 1. check we have a track over 5 mins (all/allMatch, doOnNext/peek)
         // 2. contains Stairway to Heaven
         // 3. Total length of all tracks (reduce)

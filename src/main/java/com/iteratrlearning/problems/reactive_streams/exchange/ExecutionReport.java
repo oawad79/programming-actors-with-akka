@@ -1,36 +1,30 @@
 package com.iteratrlearning.problems.reactive_streams.exchange;
 
-public class ExecutionReport
-{
+public class ExecutionReport {
     private final double price;
     private final String buyer;
     private final String seller;
 
-    public ExecutionReport(final double price, final String buyer, final String seller)
-    {
+    public ExecutionReport(final double price, final String buyer, final String seller) {
         this.price = price;
         this.buyer = buyer;
         this.seller = seller;
     }
 
-    public String getSeller()
-    {
+    public String getSeller() {
         return seller;
     }
 
-    public String getBuyer()
-    {
+    public String getBuyer() {
         return buyer;
     }
 
-    public double getPrice()
-    {
+    public double getPrice() {
         return price;
     }
 
     @Override
-    public boolean equals(final Object o)
-    {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -43,8 +37,7 @@ public class ExecutionReport
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         int result;
         long temp;
         temp = Double.doubleToLongBits(price);
@@ -55,8 +48,7 @@ public class ExecutionReport
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "ExecutionReport{" +
             "price=" + price +
             ", buyer='" + buyer + '\'' +

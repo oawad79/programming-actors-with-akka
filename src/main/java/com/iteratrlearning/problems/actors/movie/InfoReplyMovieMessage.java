@@ -20,9 +20,9 @@ public final class InfoReplyMovieMessage {
     @Override
     public String toString() {
         return "InfoReplyMovieMessage{" +
-                "movie='" + movie + '\'' +
-                ", views=" + views +
-                '}';
+            "movie='" + movie + '\'' +
+            ", views=" + views +
+            '}';
     }
 
     @Override

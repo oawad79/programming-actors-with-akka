@@ -11,11 +11,9 @@ import java.net.URISyntaxException;
 
 import static org.junit.Assert.assertEquals;
 
-public class ShouldOfferMortgage
-{
+public class ShouldOfferMortgage {
     public static void attempt(final String amountToBorrow, final int responseCode, final int port)
-        throws URISyntaxException, IOException
-    {
+        throws URISyntaxException, IOException {
         Executor.closeIdleConnections();
 
         final URIBuilder uriBuilder = new URIBuilder("http://localhost:" + port)

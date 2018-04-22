@@ -1,30 +1,25 @@
 package com.iteratrlearning.answers.reactive_streams.exchange;
 
-public class MarketDataSnapshot
-{
+public class MarketDataSnapshot {
     private final double bid;
     private final double ask;
     private final long timestamp = System.nanoTime();
 
-    public MarketDataSnapshot(final double bid, final double ask)
-    {
+    public MarketDataSnapshot(final double bid, final double ask) {
         this.bid = bid;
         this.ask = ask;
     }
 
-    public double getAsk()
-    {
+    public double getAsk() {
         return ask;
     }
 
-    public double getBid()
-    {
+    public double getBid() {
         return bid;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "MarketDataSnapshot{" +
             "bid=" + bid +
             ", ask=" + ask +
@@ -32,8 +27,7 @@ public class MarketDataSnapshot
             '}';
     }
 
-    public boolean equals(final Object o)
-    {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -43,8 +37,7 @@ public class MarketDataSnapshot
         return Double.compare(that.ask, ask) == 0;
     }
 
-    public int hashCode()
-    {
+    public int hashCode() {
         int result;
         long temp;
         temp = Double.doubleToLongBits(bid);

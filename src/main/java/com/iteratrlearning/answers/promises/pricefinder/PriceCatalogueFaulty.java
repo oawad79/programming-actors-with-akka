@@ -18,21 +18,20 @@ public class PriceCatalogueFaulty {
         new PriceCatalogueFaulty().findLocalDiscountedPrice(Currency.CHF, "Nexus7");
     }
 
-    private void findLocalDiscountedPrice(final Currency localCurrency, final String productName)
-    {
+    private void findLocalDiscountedPrice(final Currency localCurrency, final String productName) {
         long time = System.currentTimeMillis();
 
         lookupProductByName(productName)
-                     .thenComposeAsync(this::findBestPrice, executorService)
-                     .thenCombineAsync(exchangeService.lookupExchangeRateAsync(USD, localCurrency), this::exchange)
-                     .thenApply(localPrice -> {
-                         String output = String.format("A %s will cost us %f %s\n", productName, localPrice,
-                                 localCurrency);
-                         output += String.format("It took us %d ms to calculate this\n", System.currentTimeMillis() - time);
-                         return output;
-                     })
-                     .exceptionally(ex -> "Sorry try again next time: " + ex.getCause().getMessage())
-                     .thenAccept(System.out::println);
+            .thenComposeAsync(this::findBestPrice, executorService)
+            .thenCombineAsync(exchangeService.lookupExchangeRateAsync(USD, localCurrency), this::exchange)
+            .thenApply(localPrice -> {
+                String output = String.format("A %s will cost us %f %s\n", productName, localPrice,
+                    localCurrency);
+                output += String.format("It took us %d ms to calculate this\n", System.currentTimeMillis() - time);
+                return output;
+            })
+            .exceptionally(ex -> "Sorry try again next time: " + ex.getCause().getMessage())
+            .thenAccept(System.out::println);
 
 // or using whenComplete
 //                     .whenComplete( (localPrice, ex) -> {
@@ -46,21 +45,18 @@ public class PriceCatalogueFaulty {
 //                     });
     }
 
-    private CompletableFuture<Product> lookupProductByName(String productName)
-    {
+    private CompletableFuture<Product> lookupProductByName(String productName) {
         return CompletableFuture.supplyAsync(() -> catalogue.productByName(productName), executorService);
     }
 
 
     private CompletableFuture<Price> findBestPrice(Product product) {
         return CompletableFuture.supplyAsync(() -> priceFinder.findBestPrice
-                (product));
+            (product));
     }
 
 
-
-    private double exchange(Price price, double exchangeRate)
-    {
+    private double exchange(Price price, double exchangeRate) {
         return Utils.round(price.getAmount() * exchangeRate);
     }
 

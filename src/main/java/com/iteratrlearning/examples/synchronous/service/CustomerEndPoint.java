@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public abstract class CustomerEndPoint extends HttpServlet
-{
+public abstract class CustomerEndPoint extends HttpServlet {
     public static final String CUSTOMER_ID = "customerId";
 
     protected final ObjectMapper objectMapper = new ObjectMapper();
@@ -20,32 +19,23 @@ public abstract class CustomerEndPoint extends HttpServlet
     protected void doGet(
         final HttpServletRequest request,
         final HttpServletResponse response)
-        throws ServletException, IOException
-    {
+        throws ServletException, IOException {
         final String customer = request.getParameter(CUSTOMER_ID);
 
-        if ("bob".equals(customer))
-        {
+        if ("bob".equals(customer)) {
             response.setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_OK);
 
             Delayer.INST.delay();
 
-            try
-            {
+            try {
                 doGetCustomer(customer, request, response);
-            }
-            catch (final IOException | ServletException e)
-            {
+            } catch (final IOException | ServletException e) {
                 throw e;
-            }
-            catch (final Exception e)
-            {
+            } catch (final Exception e) {
                 throw new ServletException(e);
             }
-        }
-        else
-        {
+        } else {
             response.setContentType("application/text");
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.getWriter().append("Missing user").close();

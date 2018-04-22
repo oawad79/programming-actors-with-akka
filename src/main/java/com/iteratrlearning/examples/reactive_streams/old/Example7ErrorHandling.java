@@ -4,10 +4,8 @@ import io.reactivex.Flowable;
 
 import java.util.concurrent.TimeUnit;
 
-public class Example7ErrorHandling
-{
-    public static void main(String[] args)
-    {
+public class Example7ErrorHandling {
+    public static void main(String[] args) {
         // 1. retry a transient failure
 
         Flowable

@@ -6,10 +6,8 @@ import org.reactivestreams.Subscription;
 
 import java.util.concurrent.TimeUnit;
 
-public class Example9BackPressure
-{
-    public static void main(String[] args)
-    {
+public class Example9BackPressure {
+    public static void main(String[] args) {
         // 1. reactive-pull back pressure in a custom subscriber
         // 2. zip intervals of 500 + 200 ms, to show buffering in zip
         // 3. zip intervals of 5 + 2 ms, to show back pressure fail
@@ -18,33 +16,28 @@ public class Example9BackPressure
 
         Flowable
             .range(1, 100)
-            .subscribe(new Subscriber<Integer>()
-            {
+            .subscribe(new Subscriber<Integer>() {
                 private Subscription subscription;
 
                 @Override
-                public void onSubscribe(final Subscription subscription)
-                {
+                public void onSubscribe(final Subscription subscription) {
                     this.subscription = subscription;
                     subscription.request(1);
                 }
 
                 @Override
-                public void onNext(final Integer integer)
-                {
+                public void onNext(final Integer integer) {
                     System.out.println(integer);
                     subscription.request(1);
                 }
 
                 @Override
-                public void onError(final Throwable throwable)
-                {
+                public void onError(final Throwable throwable) {
 
                 }
 
                 @Override
-                public void onComplete()
-                {
+                public void onComplete() {
                     System.out.println("complete");
                 }
             });
@@ -58,14 +51,10 @@ public class Example9BackPressure
         wait10Seconds();
     }
 
-    private static void wait10Seconds()
-    {
-        try
-        {
+    private static void wait10Seconds() {
+        try {
             Thread.sleep(10000);
-        }
-        catch (InterruptedException e)
-        {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

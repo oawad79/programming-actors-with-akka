@@ -16,44 +16,41 @@ public class PriceCatalogueAll {
     private final ExchangeService exchangeService = new ExchangeService();
     private final ExecutorService executorService = Executors.newCachedThreadPool();
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
 
         new PriceCatalogueAll().findAllDiscountedPrice(Currency.CHF, Catalogue.products);
     }
 
-    private void findAllDiscountedPrice(final Currency localCurrency, List<Product> products)
-    {
+    private void findAllDiscountedPrice(final Currency localCurrency, List<Product> products) {
         long time = System.currentTimeMillis();
 
         CompletableFuture<Double> exchangeRateFuture
-                = CompletableFuture.supplyAsync(() -> exchangeService.lookupExchangeRate(USD, localCurrency), executorService);
+            = CompletableFuture.supplyAsync(() -> exchangeService.lookupExchangeRate(USD, localCurrency), executorService);
 
         List<CompletableFuture<Price>> priceFutureList = products.stream()
-                .map(product -> CompletableFuture.supplyAsync(() -> priceFinder.findBestPrice(product), executorService))
-                .collect(toList());
+            .map(product -> CompletableFuture.supplyAsync(() -> priceFinder.findBestPrice(product), executorService))
+            .collect(toList());
 
         CompletableFuture<List<Price>> priceListFuture
-                = sequence(priceFutureList);
+            = sequence(priceFutureList);
 
         priceListFuture.thenCombine(exchangeRateFuture, (list, exchangeRate)
-                -> list.stream().mapToDouble(price -> exchange(price, exchangeRate)).sum())
-                .thenAccept(totalPrice -> System.out.printf("The total price is %f %s\n", totalPrice, localCurrency)).join();
+            -> list.stream().mapToDouble(price -> exchange(price, exchangeRate)).sum())
+            .thenAccept(totalPrice -> System.out.printf("The total price is %f %s\n", totalPrice, localCurrency)).join();
 
         System.out.printf("It took us %d ms to calculate this\n", System.currentTimeMillis() - time);
     }
 
-    private double exchange(Price price, double exchangeRate)
-    {
+    private double exchange(Price price, double exchangeRate) {
         return Utils.round(price.getAmount() * exchangeRate);
     }
 
     private <T> CompletableFuture<List<T>> sequence(List<CompletableFuture<T>> futures) {
         CompletableFuture<Void> allFuturesDone =
-                CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));
         return allFuturesDone.thenApply(v ->
-                futures.stream()
-                        .map(CompletableFuture::join)
-                        .collect(toList()));
+            futures.stream()
+                .map(CompletableFuture::join)
+                .collect(toList()));
     }
 }

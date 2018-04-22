@@ -15,13 +15,13 @@ public class MovieServiceActor extends UntypedActor {
 
     // When actor fails, apply it to the actor, not all its children
     private OneForOneStrategy strategy = new OneForOneStrategy(10, Duration.create("1 minute"),
-            t -> {
-                if (t instanceof NumberFormatException) {
-                    return OneForOneStrategy.resume();
-                } else {
-                    return OneForOneStrategy.escalate();
-                }
-            });
+        t -> {
+            if (t instanceof NumberFormatException) {
+                return OneForOneStrategy.resume();
+            } else {
+                return OneForOneStrategy.escalate();
+            }
+        });
 
     @Override
     public SupervisorStrategy supervisorStrategy() {
@@ -32,11 +32,10 @@ public class MovieServiceActor extends UntypedActor {
         ratingActor = getContext().actorOf(Props.create(RatingActor.class));
 
 
-
     }
 
     @Override
-    public void preRestart(Throwable reason,  Option<Object> message) {
+    public void preRestart(Throwable reason, Option<Object> message) {
         System.out.println("preRestarting the MovieServiceActor");
         System.out.println("The message was " + message);
         System.err.println(reason);

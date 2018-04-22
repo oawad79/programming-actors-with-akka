@@ -6,7 +6,9 @@ import akka.actor.Props;
 import akka.pattern.PatternsCS;
 import akka.testkit.JavaTestKit;
 import akka.testkit.TestActorRef;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.concurrent.CompletableFuture;
 

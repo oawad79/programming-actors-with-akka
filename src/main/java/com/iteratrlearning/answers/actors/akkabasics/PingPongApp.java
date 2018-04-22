@@ -10,10 +10,10 @@ public class PingPongApp {
         ActorSystem actorSystem = ActorSystem.create();
         // Creates a SimpleActor and returns reference to it
         ActorRef pingActor
-                = actorSystem.actorOf(Props.create(PingActor.class), "ping-actor");
+            = actorSystem.actorOf(Props.create(PingActor.class), "ping-actor");
 
         ActorRef pongActor
-                = actorSystem.actorOf(Props.create(PongActor.class), "pong-actor");
+            = actorSystem.actorOf(Props.create(PongActor.class), "pong-actor");
 
         pingActor.tell("PONG", pongActor);
 

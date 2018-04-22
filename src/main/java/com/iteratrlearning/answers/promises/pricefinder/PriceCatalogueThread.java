@@ -4,8 +4,7 @@ import com.iteratrlearning.examples.promises.pricefinder.*;
 
 import static com.iteratrlearning.examples.promises.pricefinder.Currency.USD;
 
-public class PriceCatalogueThread
-{
+public class PriceCatalogueThread {
     private final Catalogue catalogue = new Catalogue();
     private final PriceFinder priceFinder = new PriceFinder();
     private final ExchangeService exchangeService = new ExchangeService();
@@ -35,8 +34,7 @@ public class PriceCatalogueThread
         System.out.printf("It took us %d ms to calculate this\n", System.currentTimeMillis() - time);
     }
 
-    private double exchange(Price price, double exchangeRate)
-    {
+    private double exchange(Price price, double exchangeRate) {
         return Utils.round(price.getAmount() * exchangeRate);
     }
 

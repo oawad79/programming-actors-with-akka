@@ -10,33 +10,25 @@ import java.io.IOException;
 /**
  * .
  */
-public class BackpressuredTicksGraph
-{
+public class BackpressuredTicksGraph {
 
-    private static Subscriber<Double> backPressuredTicksGraph()
-    {
-        return new Subscriber<Double>()
-        {
+    private static Subscriber<Double> backPressuredTicksGraph() {
+        return new Subscriber<Double>() {
             private Subscription s;
 
             @Override
-            public void onSubscribe(final Subscription s)
-            {
+            public void onSubscribe(final Subscription s) {
                 this.s = s;
                 s.request(1);
             }
 
             @Override
-            public void onNext(final Double price)
-            {
+            public void onNext(final Double price) {
                 ThrottledTicksGraph.printPrice(price);
 
-                try
-                {
+                try {
                     Thread.sleep(500);
-                }
-                catch (InterruptedException e)
-                {
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
@@ -44,52 +36,41 @@ public class BackpressuredTicksGraph
             }
 
             @Override
-            public void onError(final Throwable t)
-            {
+            public void onError(final Throwable t) {
                 t.printStackTrace();
             }
 
             @Override
-            public void onComplete()
-            {
+            public void onComplete() {
                 System.out.println("Done");
             }
         };
     }
 
-    private static Publisher<String> pricePublisher()
-    {
+    private static Publisher<String> pricePublisher() {
         return (subscriber) ->
         {
-            subscriber.onSubscribe(new Subscription()
-            {
+            subscriber.onSubscribe(new Subscription() {
                 @Override
-                public void request(final long n)
-                {
-                    for (long i = 0; i < n; i++)
-                    {
-                        try
-                        {
+                public void request(final long n) {
+                    for (long i = 0; i < n; i++) {
+                        try {
                             subscriber.onNext(PriceApiService.getPrice());
-                        }
-                        catch (final IOException e)
-                        {
+                        } catch (final IOException e) {
                             subscriber.onError(e);
                         }
                     }
                 }
 
                 @Override
-                public void cancel()
-                {
+                public void cancel() {
                     subscriber.onComplete();
                 }
             });
         };
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Flowable.fromPublisher(pricePublisher())
             .map(Double::parseDouble)
             .subscribe(backPressuredTicksGraph());

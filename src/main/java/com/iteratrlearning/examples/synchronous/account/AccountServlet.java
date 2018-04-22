@@ -7,15 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AccountServlet extends CustomerEndPoint
-{
+public class AccountServlet extends CustomerEndPoint {
     @Override
     protected void doGetCustomer(
         final String customer,
         final HttpServletRequest request,
         final HttpServletResponse response)
-        throws ServletException, IOException
-    {
+        throws ServletException, IOException {
         writer.writeValue(response.getOutputStream(), new BalanceReport(123));
     }
 }

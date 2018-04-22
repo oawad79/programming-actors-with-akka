@@ -18,11 +18,11 @@ public class TryExample {
         // 3) Try.of with exception, onFailure
         // 4) CF + Try + buggyFindPrice + getOrElse
         CompletableFuture<Try<Double>> futureTryPrice
-                = CompletableFuture.supplyAsync(() -> Try.of(() -> findPrice("Nexus7")));
+            = CompletableFuture.supplyAsync(() -> Try.of(() -> findPrice("Nexus7")));
 
         futureTryPrice.thenApply(tryPrice -> tryPrice.map(price -> price * 2).getOrElse(0.0))
-                .thenAccept(System.out::println)
-                .join();
+            .thenAccept(System.out::println)
+            .join();
     }
 
 

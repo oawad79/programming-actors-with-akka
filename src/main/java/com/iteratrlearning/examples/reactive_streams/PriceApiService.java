@@ -13,14 +13,12 @@ import java.util.Deque;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-public class PriceApiService extends Service
-{
+public class PriceApiService extends Service {
     private static final int PORT = 9091;
     private static final String LIMITED = "/limited";
     private static final String UNLIMITED = "/unlimited";
 
-    public PriceApiService()
-    {
+    public PriceApiService() {
         super(handler ->
         {
             handler.addServletWithMapping(RateLimitedServlet.class, LIMITED);
@@ -28,23 +26,19 @@ public class PriceApiService extends Service
         }, PORT);
     }
 
-    public static void main(String[] args) throws Exception
-    {
+    public static void main(String[] args) throws Exception {
         new PriceApiService().run();
     }
 
-    public static String getPrice() throws IOException
-    {
+    public static String getPrice() throws IOException {
         return getPrice(UNLIMITED);
     }
 
-    public static String getPriceLimited() throws IOException
-    {
+    public static String getPriceLimited() throws IOException {
         return getPrice(LIMITED);
     }
 
-    private static String getPrice(final String suffix) throws IOException
-    {
+    private static String getPrice(final String suffix) throws IOException {
         return Request
             .Get("http://localhost:" + PORT + suffix)
             .execute()
@@ -53,18 +47,15 @@ public class PriceApiService extends Service
             .trim();
     }
 
-    public static class UnlimitedServlet extends HttpServlet
-    {
+    public static class UnlimitedServlet extends HttpServlet {
         @Override
         protected void doGet(final HttpServletRequest req, final HttpServletResponse resp)
-            throws ServletException, IOException
-        {
+            throws ServletException, IOException {
             printPrice(resp);
         }
     }
 
-    public static class RateLimitedServlet extends HttpServlet
-    {
+    public static class RateLimitedServlet extends HttpServlet {
         private static final long ONE_SECOND = TimeUnit.SECONDS.toMillis(1);
         private static final int MAX_REQS_PER_SECOND = 2;
 
@@ -72,33 +63,25 @@ public class PriceApiService extends Service
 
         @Override
         protected void doGet(final HttpServletRequest req, final HttpServletResponse resp)
-            throws ServletException, IOException
-        {
-            if (rateLimited())
-            {
+            throws ServletException, IOException {
+            if (rateLimited()) {
                 printRateLimitError(resp);
-            }
-            else
-            {
+            } else {
                 printPrice(resp);
             }
         }
 
-        private boolean rateLimited()
-        {
+        private boolean rateLimited() {
             final long currentTimeMillis = System.currentTimeMillis();
             final long limit = currentTimeMillis - ONE_SECOND;
-            synchronized (times)
-            {
-                while (!times.isEmpty() && times.peekLast() < limit)
-                {
+            synchronized (times) {
+                while (!times.isEmpty() && times.peekLast() < limit) {
                     times.removeLast();
                 }
 
                 final boolean isRateLimited = times.size() > MAX_REQS_PER_SECOND;
 
-                if (!isRateLimited)
-                {
+                if (!isRateLimited) {
                     times.offerFirst(currentTimeMillis);
                 }
 
@@ -106,8 +89,7 @@ public class PriceApiService extends Service
             }
         }
 
-        private void printRateLimitError(final HttpServletResponse resp) throws IOException
-        {
+        private void printRateLimitError(final HttpServletResponse resp) throws IOException {
             resp.setContentType("application/text");
             resp.setStatus(500);
             resp.getWriter()
@@ -116,8 +98,7 @@ public class PriceApiService extends Service
         }
     }
 
-    private static void printPrice(final HttpServletResponse resp) throws IOException
-    {
+    private static void printPrice(final HttpServletResponse resp) throws IOException {
         final double price = ThreadLocalRandom.current().nextDouble(100, 200);
 
         resp.setContentType("application/text");

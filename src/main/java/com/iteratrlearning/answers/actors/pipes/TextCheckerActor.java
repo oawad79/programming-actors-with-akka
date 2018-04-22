@@ -21,13 +21,13 @@ public class TextCheckerActor extends UntypedActor {
     public void onReceive(Object message) throws Throwable {
         log.info("Received Message: " + message);
         String lowercaseMessage = ((String) message).toLowerCase();
-        if(!containsForbiddenWord(lowercaseMessage)){
+        if (!containsForbiddenWord(lowercaseMessage)) {
             nextActor.tell(message, getSelf());
         }
     }
 
     private boolean containsForbiddenWord(String message) {
         return Arrays.stream(forbiddenWords)
-                .anyMatch(message::contains);
+            .anyMatch(message::contains);
     }
 }

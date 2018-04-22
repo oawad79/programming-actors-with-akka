@@ -15,8 +15,8 @@ public final class ViewMovieMessage {
     @Override
     public String toString() {
         return "ViewMessage{" +
-                "movie='" + movie + '\'' +
-                '}';
+            "movie='" + movie + '\'' +
+            '}';
     }
 
     @Override

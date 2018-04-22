@@ -28,9 +28,7 @@ public class StorageActor extends UntypedActor {
             final String movie = ((InfoMovieMessage) message).getMovie();
             Integer count = movieViews.getOrDefault(movie, 0);
             getSender().tell(new InfoReplyMovieMessage(movie, count), getSelf());
-        }
-
-        else if (message.equals("echo")) {
+        } else if (message.equals("echo")) {
             log.info("ECHO!");
         }
     }

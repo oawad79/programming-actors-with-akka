@@ -9,8 +9,7 @@ import com.iteratrlearning.examples.synchronous.service.CustomerEndPoint;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class MortgageServlet extends CustomerEndPoint
-{
+public class MortgageServlet extends CustomerEndPoint {
     private final AccountProxy accountProxy = new AccountProxy();
     private final CreditCheckProxy creditCheckProxy = new CreditCheckProxy();
 
@@ -19,8 +18,7 @@ public class MortgageServlet extends CustomerEndPoint
         final String customer,
         final HttpServletRequest request,
         final HttpServletResponse response)
-        throws Exception
-    {
+        throws Exception {
         final BalanceReport balanceReport = accountProxy.getBalance(customer);
         final CreditReport creditReport = creditCheckProxy.getCreditReport(customer);
 

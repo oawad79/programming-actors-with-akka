@@ -15,8 +15,8 @@ public final class InfoMovieMessage {
     @Override
     public String toString() {
         return "InfoMovieMessage{" +
-                "movie='" + movie + '\'' +
-                '}';
+            "movie='" + movie + '\'' +
+            '}';
     }
 
     @Override

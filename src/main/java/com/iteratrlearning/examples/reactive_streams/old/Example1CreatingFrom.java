@@ -5,10 +5,8 @@ import io.reactivex.Flowable;
 import java.util.Arrays;
 import java.util.List;
 
-public class Example1CreatingFrom
-{
-    public static void main(String[] args)
-    {
+public class Example1CreatingFrom {
+    public static void main(String[] args) {
         final String value = "Hello World!";
         final String[] valuesArray = {"Hello", "My name is Luke", "I'm your Son"};
         final List<String> values = Arrays.asList(valuesArray);

@@ -5,24 +5,19 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AsyncCurrentAccountServlet extends AsyncCustomerEndPoint
-{
+public class AsyncCurrentAccountServlet extends AsyncCustomerEndPoint {
     private final AsyncAccountProxy accountProxy = new AsyncAccountProxy(client, objectMapper);
 
     @Override
     protected void doGetCustomer(
-        final String customer, final AsyncContext context) throws Exception
-    {
+        final String customer, final AsyncContext context) throws Exception {
         accountProxy.getBalance(customer, balanceReport ->
         {
             final ServletResponse response = context.getResponse();
-            try
-            {
+            try {
                 ok((HttpServletResponse) response);
                 writer.writeValue(response.getOutputStream(), balanceReport);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             context.complete();

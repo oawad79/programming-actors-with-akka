@@ -1,7 +1,6 @@
 package com.iteratrlearning.examples.reactive_streams;
 
-public class Tracks
-{
+public class Tracks {
 
     public static final String LED_ZEPPELIN = "Led Zeppelin";
     public static final String PINK_FLOYD = "Pink Floyd";
@@ -23,5 +22,5 @@ public class Tracks
         new Track("Let It Be", 243, THE_BEATLES);
 
     public static final Track[] allTracks =
-        { blackDog, rockAndRoll, theBattleOfEvermore, stairwayToHeaven, inTheFlesh, letItBe };
+        {blackDog, rockAndRoll, theBattleOfEvermore, stairwayToHeaven, inTheFlesh, letItBe};
 }

@@ -12,8 +12,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class AsyncBankServiceTest
-{
+public class AsyncBankServiceTest {
 
     @Rule
     public ServiceResource accountService = new ServiceResource(new AccountService());
@@ -27,16 +26,14 @@ public class AsyncBankServiceTest
     private BankProxy proxy = new BankProxy(AsyncBankService.PORT);
 
     @Test
-    public void shouldReturnAccountBalance() throws Exception
-    {
+    public void shouldReturnAccountBalance() throws Exception {
         final BalanceReport balanceReport = proxy.getAccountBalance("bob");
 
         assertEquals(balanceReport.getBalance(), 123);
     }
 
     @Test
-    public void shouldReturnMortgageReport() throws Exception
-    {
+    public void shouldReturnMortgageReport() throws Exception {
         final MortgageReport mortgageReport = proxy.getMortgageReport("bob");
 
         assertEquals(mortgageReport.getBalance(), 123);

@@ -2,8 +2,7 @@ package com.iteratrlearning.problems.reactive_streams;
 
 import io.reactivex.Flowable;
 
-public class NewsFeedExercise
-{
+public class NewsFeedExercise {
     private static final String[] NEWS_TITLES =
         {
             "Trump election: US 'identifies agents behind Russian hack'",
@@ -16,8 +15,7 @@ public class NewsFeedExercise
             "David Bowie terminal cancer diagnosis 'three months before death'"
         };
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         // TODO: subscribe or blockingSubscribe to this news feed
         final Flowable<String> newsFeed = Flowable.fromArray(NEWS_TITLES);
 
